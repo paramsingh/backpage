@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Create a thread</title>
+	</head>
+	<body>
+		<form action="/app/create/" method="post">
+			{% csrf_token %}
+			{{form}}
+			<input type="submit" name="submit" value="create thread" />
+		</form>
+	</body>
+</html>
