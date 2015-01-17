@@ -3,14 +3,14 @@
 	<head>
 		<title>{{thread.id}}</title>
 	</head>
-	<body>
+	<body onl>
 		<h1> Thread </h1>
 		<p>{{thread.title}}</p>
 		<p>{{thread.text}}</p>
 		<p>{{thread.submitter}}</p>
 		<p>{{thread.time}}</p>
 		{% for i in posts %}
-			<h1>Post #{{i.id}}</h1>
+			<h2>Post #{{i.id}}</h2>
 			<p>{{i.text}}</p>
 			<p>{{i.submitter}}</p>
 			<p>{{i.time_posted}}</p>
