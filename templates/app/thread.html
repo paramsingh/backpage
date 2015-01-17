@@ -4,8 +4,22 @@
 		<title>{{thread.id}}</title>
 	</head>
 	<body>
+		<h1> Thread </h1>
 		<p>{{thread.title}}</p>
 		<p>{{thread.text}}</p>
 		<p>{{thread.submitter}}</p>
+		<p>{{thread.time}}</p>
+		{% for i in posts %}
+			<h1>Post #{{i.id}}</h1>
+			<p>{{i.text}}</p>
+			<p>{{i.submitter}}</p>
+			<p>{{i.time_posted}}</p>
+		{% endfor %}
+		<form action="/app/thread/{{thread.id}}/" method="post">
+			{% csrf_token %}
+			{{post_form}}
+			<input type="submit" name="submit" value="add post" />
+		</form>
+
 	</body>
 </html>
