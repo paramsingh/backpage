@@ -4,6 +4,10 @@
 <title>BackPage-HOME</title>
 <script src="{% static 'js/scroll.js' %}"></script>
 <style>
+@font-face {
+	font-family: opificio;
+	src: url("{% static 'fonts/Opificio.ttf'%}");
+}
 *{
 	padding: 0px;
 	margin: 0px;
@@ -27,7 +31,7 @@ body {
 }
 #divslide3{
 	background-color: #3333CC;
-	top: 200%;
+	top: 100%;
 }
 
 #divnav{
@@ -50,6 +54,59 @@ body {
 	box-shadow: 0px 0px 2px 2px white;
 	background-color: 	#996633;
 }
+
+#divform {
+	width: 30%;
+	height: 25%;
+	position: absolute;
+	left: 35%;
+	top: 32%;
+	text-align: center;
+	font-family: verdana;
+}
+#id_title{
+	margin-top: 11%;
+	display: inline-block;
+	width: 90%;
+	height: 35px;
+	padding-left: 5px;
+	padding: 10px;
+	font-size: 25px;
+	border: none;
+	border-radius: 5px;
+}
+#id_text{
+	width: 90%;
+	height: 70px;
+	margin-top: 10px;
+	padding-left: 5px;
+	padding: 10px;
+	font-size: 15px;
+	border: none;
+	border-radius: 5px;
+}
+#submitbutton {
+	width: 95%;
+	height: 40px;
+	margin-top: 10px;
+	border: none;
+	padding: 5px;
+	font-size: 25px;
+	border-radius: 5px;
+	font-family: opificio;
+	background-color: #59a6a6;
+	color: white;
+	text-shadow: 0px 0px 1px black;
+}
+#submitbutton:hover {
+	background-color: #1B3232;
+	text-shadow: 0px 0px 1px black;
+	box-shadow: 0px 0px 1px 1px white inset;
+}
+#id_text:focus,#id_title:focus {
+	box-shadow: none;
+	border: none;
+}
 </style>
 
 <script>
@@ -70,11 +127,11 @@ body {
 
 </div>
 <div id="divslide3">
-<form action="/app/index/" method="POST">
+	<div id="divform">
+	<form action="/app/index/" method="POST">
 	{% csrf_token %}
-	{{form}}
-	<input type="submit" value="create thread">
+	{{form.title}}<br>
+	{{form.text}}
+	<input type="submit" value="CREATE THREAD" id="submitbutton">
 </div>
-<div id="divform">
-
 </div>
