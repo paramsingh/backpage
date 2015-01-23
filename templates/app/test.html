@@ -1,0 +1,21 @@
+<!doctype html>
+<head>
+	<script src="/static/jquery-2.1.1.min.js"></script>
+	<script>
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","/app/numposts/9/",true);
+		xmlhttp.send();
+		xmlhttp.onreadystatechange = function (){
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				var b = JSON.parse(xmlhttp.responseText);
+				console.log(b.161.text);
+			}
+		}
+		
+	</script>
+</head>
+<body>
+	<div id="test">
+	fuck you
+	</div>
+</body>

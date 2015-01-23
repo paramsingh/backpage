@@ -10,7 +10,7 @@ class ThreadForm(forms.ModelForm):
 		fields = ['title', 'text']
 
 class PostForm(forms.ModelForm):
-	text = forms.CharField(max_length = 4962)
+	text = forms.CharField(max_length = 4962, )
 
 	class Meta:
 		model = Post
