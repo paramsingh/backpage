@@ -4,7 +4,9 @@
 </head>
 
 <body>
+	<ul>
 	{%for i in threads%}
-		<a href="/app/thread/{{i.id}}">{{i.title}}</a>
+		<li><a href="/app/thread/{{i.id}}">{{i.title}}</a></li>
 	{% endfor %}
+	</ul>
 </body>

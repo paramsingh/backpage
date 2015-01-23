@@ -1,0 +1,80 @@
+<!doctype html>
+{% load staticfiles %}
+<head>
+<title>BackPage-HOME</title>
+<script src="{% static 'js/scroll.js' %}"></script>
+<style>
+*{
+	padding: 0px;
+	margin: 0px;
+}
+body {
+	min-width: 980px;
+	overflow: hidden;
+}
+#divslide1, #divslide2, #divslide3{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+#divslide1{
+	background-color: #6e6496;
+	top: 0%;
+}
+#divslide2{
+	background-color: #59a6a6;
+	top: 100%;
+}
+#divslide3{
+	background-color: #3333CC;
+	top: 200%;
+}
+
+#divnav{
+	float: left;
+	position: fixed;
+	top: 45%;
+	left: 3%;
+	z-index: 1500;
+}
+#divnav1,#divnav2,#divnav3{
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+	background-color: white;
+	z-index: 1500;
+	margin-top: -20px;
+	position: fixed;
+}
+#divnav1:hover,#divnav2:hover,#divnav3:hover{
+	box-shadow: 0px 0px 2px 2px white;
+	background-color: 	#996633;
+}
+</style>
+
+<script>
+
+</script>
+</head>
+<body>
+
+<div id="divnav">
+<div id="divnav1" onClick="functionscroll1()"></div><br>
+<div id="divnav1" onClick="functionscroll2()"></div><br>
+<div id="divnav1" onClick="functionscroll3()"></div>
+</div>
+
+<div id="divslide1">
+</div>
+<div id="divslide2">
+
+</div>
+<div id="divslide3">
+<form action="/app/index/" method="POST">
+	{% csrf_token %}
+	{{form}}
+	<input type="submit" value="create thread">
+</div>
+<div id="divform">
+
+</div>

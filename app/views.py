@@ -23,7 +23,8 @@ def create(request):
 			return HttpResponseRedirect("/app/thread/"+str(thread.id)+"/")
 		else:
 			print(thread_form.errors)
-	return render(request, 'app/create_thread.html', context_dict)
+	context_dict['all_threads'] = threads_in_order()
+	return render(request, 'app/index.html', context_dict)
 
 def thread(request, thread_id):
 	thread_id = int(thread_id)
@@ -69,4 +70,4 @@ def all_threads(request):
 	threads = threads_in_order()
 	context_dict = {}
 	context_dict['threads'] = threads
-	return render(request, 'app/all_threads.html', context_dict)
+	return render(request, 'app/index.html', context_dict)
