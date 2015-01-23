@@ -6,13 +6,20 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 def threads_in_order():
 	return sorted(Thread.objects.all(), key=lambda x: x.last_post_time, reverse=True)
 
+def threads_in_rev_order():
+	return sorted(Thread.objects.all(), key=lambda x: x.last_post_time)
 
 def create(request):
 	context_dict = {'form': ThreadForm()}
+	max_number = 20
 	if request.method == 'POST':
 		thread_form = ThreadForm(request.POST)
 		if thread_form.is_valid():
 			thread = thread_form.save(commit=True)
+			if Thread.objects.count() > max_number:
+				threads = threads_in_rev_order()
+				a = threads[0]
+				a.delete()
 			return HttpResponseRedirect("/app/thread/"+str(thread.id)+"/")
 		else:
 			print(thread_form.errors)
