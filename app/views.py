@@ -2,7 +2,9 @@ from django.shortcuts import render
 from app.forms import ThreadForm, PostForm
 from app.models import Thread, Post
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.core import serializers
+
+def threads_in_order():
+	return sorted(Thread.objects.all(), key=lambda x: x.last_post_time, reverse=True)
 
 
 def create(request):
@@ -29,6 +31,9 @@ def thread(request, thread_id):
 			post = post_form.save(commit = False)
 			post.thread = current_thread
 			post.save()
+			current_thread.last_post_time = post.time_posted
+			current_thread.save()
+			print(str(current_thread.last_post_time))
 		else:
 			print(post_form.errors)
 	context_dict['post_form'] = PostForm()
@@ -53,3 +58,8 @@ def test(request):
 	return render(request, 'app/test.html', {})
 
 
+def all_threads(request):
+	threads = threads_in_order()
+	context_dict = {}
+	context_dict['threads'] = threads
+	return render(request, 'app/all_threads.html', context_dict)

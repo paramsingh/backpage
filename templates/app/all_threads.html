@@ -1,0 +1,10 @@
+<!doctype html>
+<head>
+	<title>All threads</title>
+</head>
+
+<body>
+	{%for i in threads%}
+		<a href="/app/thread/{{i.id}}">{{i.title}}</a>
+	{% endfor %}
+</body>
