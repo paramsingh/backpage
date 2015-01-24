@@ -14,6 +14,10 @@
 			}
 			body {
 				padding: 30px;
+				background-image: url("{% static 'images/back3.png' %}");
+				background-size: 100vw 100vh;
+				background-repeat: no-repeat;
+				background-attachment: fixed;
 			}
 			#divThread {
 				border: 1px solid black;
@@ -23,6 +27,7 @@
 				padding: 10px;
 				margin: auto;
 				margin-bottom: 10px;
+				background-color: rgba(254,254,220,0.7);
 			}
 			.threadTitle {
 				text-decoration: underline;
@@ -39,17 +44,20 @@
 			}
 
 			.divPost{
-				border-top: 1px solid black;
-				background-color: #F2f2f2;
+				background-color: rgba(254,254,220,0.8);
 				padding: 3px 10px;
 				width: 500px;
 				margin: auto;
+				margin-top: 10px;
+				border-radius: 10px;
+				border: 1px solid black;
 				font-family: sans-serif;
 			}
 			.postNo {
 				display: block;
 				font-size: 15px;
 				text-decoration: underline;
+				margin-bottom: 10px;
 			}
 			.postText{
 				display: block;
@@ -59,6 +67,7 @@
 			.postTime{
 				display: block;
 				font-size: 12px;
+				margin-top: 7px;
 			}
 
 			#id_text {
@@ -100,11 +109,34 @@
 				left: 450px;
 				display: inline;
 			}
+			.spanreport1 {
+				position: relative;
+				left: 220px;
+				display: inline;
+			}
+			.divpostback {
+				width: 500px;
+				background-color: white;
+				opacity: 0.4;
+			}
 		</style>
 		
 	</head>
 	<body>
 		<div id="divThread">
+		<span class="spanreport1" onClick="funcreportthread()">Report</span>
+		<div id="reportthread"  style="position: absolute; margin-left: -15%; display: none; top: 350px; width: 300px; height: 100px; background-color: violet; border: 1px solid black; line-height: 100px; text-align: center; box-shadow: 10px 10px 2px 2px silver; border-radius: 5px; z-index: 2;">
+				<form action="/app/report_thread/{{thread.id}}/" method="post">
+			{% csrf_token %}
+			{{thread_report_form.message}}
+			<input type = "submit" value="Report Thread">
+		</form>
+				</div>
+			<script>
+				function funcreportthread(){
+					document.getElementById("reportthread").style.display="inline";
+				}
+			</script>
 		<span class="threadTitle">{{thread.title}}</span>
 		<span class="threadText">{{thread.text}}</span>
 		<span class="threadTime" id="threadtime">
@@ -112,44 +144,51 @@
 			var thread_time = new Date("{{thread.time|date:'Y/m/d H:i:s'}}");
 			var current=new Date();
 			var c=current-thread_time;
-			// if difference is less than 1 second
-			if(c<1000) document.getElementById("threadtime").innerHTML="Just Now";
+			// if difference is less than 1 minute
+			if(c<60000) document.getElementById("threadtime").innerHTML="Just Now";
 			// if difference is less than 2 minutes and difference is
-			else if((c/60000)<120 && (c/3600000)<1) document.getElementById("threadtime").innerHTML=Math.round(c/60000)+" min ago";
-			else if((c/3600000)<1) document.getElementById("threadtime").innerHTML=Math.round(c/60000)+" mins ago";
-			else if(c/3600000<2) document.getElementById("threadtime").innerHTML=Math.round(c/3600000)+" Hour Ago";
-			else if(c/3600000>2 && c/86400000<1) document.getElementById("threadtime").innerHTML=Math.round(c/3600000)+" Hours Ago";
+			else if(c>60000 && c<120000) document.getElementById("threadtime").innerHTML="1 min ago";
+			else if(c>120000 && (c/3600000)<1) document.getElementById("threadtime").innerHTML=Math.round(c/60000)+" mins ago";
+			else if(c/3600000>1 && c/3600000<1.5) document.getElementById("threadtime").innerHTML=Math.round(c/3600000)+" Hour Ago";
+			else if(c/3600000>1.5 && c/86400000<1) document.getElementById("threadtime").innerHTML=Math.round(c/3600000)+" Hours Ago";
 			else if(c/86400000>1) document.getElementById("threadtime").innerHTML="{{thread.time}}";
 		</script>
-	</span>
-			<form action="/app/report_thread/{{thread.id}}/" method="post">
-			{% csrf_token %}
-			{{thread_report_form.message}}
-			<input type = "submit" value="Report Thread">
-		</form>
+		</span>
+			
 		</div>
 
 		{% for i in posts %}
-		<div class="divPost">
-			<span class="spanreport">Report</span>
+			<div class="divPost">
+				<span class="spanreport" onClick="funcreport{{i.id}}()">Report</span>
+				<div id="report{{i.id}}"  style="position: absolute; margin: auto; display: none; top: 350px; width: 300px; height: 100px; background-color: violet; border: 1px solid black; line-height: 100px; text-align: center; box-shadow: 10px 10px 2px 2px silver; border-radius: 5px;">
+				<form action="/app/report_post/{{i.id}}/" method="post">
+					{% csrf_token %}
+					{{post_report_form.message}}
+					<input type = "submit" value = "Report Post #{{i.id}}">
+				</form>	
+				</div>
+			<script>
+				function funcreport{{i.id}}(){
+					document.getElementById("report{{i.id}}").style.display="inline";
+				}
+			</script>
 			<span class="postNo">Post #{{i.id}}</span>
 			<span class="postText">{{i.text}}</span>
 			<span class="postTime" id="post{{i.id}}"><script>
 			var a = new Date("{{i.time_posted|date:'Y/m/d H:i:s'}}");
 			var b=new Date();
 			var c=b-a;
-			if(c<1000) document.getElementById("post{{i.id}}").innerHTML="Just Now";
-			else if((c/60000)<120 && (c/3600000)<1) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/60000)+" min ago";
-			else if((c/3600000)<1) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/60000)+" mins ago";
-			else if(c/3600000<2) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/3600000)+" Hour Ago";
-			else if(c/3600000>2) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/3600000)+" Hours Ago";
+			// if difference is less than 1 minute
+			if(c<60000) document.getElementById("post{{i.id}}").innerHTML="Just Now";
+			// if difference is less than 2 minutes and difference is
+			else if(c>60000 && c<12000) document.getElementById("post{{i.id}}").innerHTML="1 min ago";
+			else if(c>12000 && (c/3600000)<1) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/60000)+" mins ago";
+			else if(c/3600000>1 && c/3600000<1.5) document.getElementById("post{{i.id}}").innerHTML="1 Hour Ago";
+			else if(c/3600000>1.5 && c/86400000<1) document.getElementById("post{{i.id}}").innerHTML=Math.round(c/3600000)+" Hours Ago";
+			else if(c/86400000>1) document.getElementById("post{{i.id}}").innerHTML="{{thread.time}}";
 		</script></span>	
 		
-		<form action="/app/report_post/{{i.id}}/" method="post">
-				{% csrf_token %}
-				{{post_report_form.message}}
-				<input type = "submit" value = "Report Post">
-		</form>		
+		
 		</div>
 		{% endfor %}
 		<div id="divformend">
@@ -159,7 +198,6 @@
 			{{post_form.text}}
 			<input type="submit" name="submit" value="Add Post" id="id_submit" />
 		</form>
-		<button id="button1" onClick="func1()">Click</button>
 	</div>
 	</body>
 </html>

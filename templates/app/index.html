@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <head>
 	<link rel="icon" type="image/icon" href="{% static 'images/toucan1.png'%}">
-<title>BackPage-HOME</title>
+<title>BackPage</title>
 <script src="{% static 'js/scroll.js' %}"></script>
 <style>
 @font-face {
@@ -53,7 +53,7 @@ body {
 }
 #divnav1:hover,#divnav2:hover,#divnav3:hover{
 	box-shadow: 0px 0px 2px 2px white;
-	background-color: 	#996633;
+	background-color: brown;
 }
 
 #divform {
@@ -121,7 +121,7 @@ body {
 }
 #spanabout{
 	font-family: opificio;
-	font-size: 120px;
+	font-size: 100px;
 	color: #ffffcc;
 	position: absolute;
 	left: 20%;
@@ -140,39 +140,57 @@ body {
 #divheader{
 	width: 100%;
 	height: 6%;
-	background-color: white;
 	position: absolute;
 	z-index: 10000;
 	top: 0px;
 	left: 0px;
 	box-shadow: 0px 0px 1px 1px black;
-	background-color: #3333cc;
-	opacity: 0.6;
+	background-color: rgba(51,51,204,0.6);
+	color: white;
+	line-height: 300%;
+}
+#spanheaderhome {
+	font-family: impact;
+	margin-left: 50px;
+	font-size: 30px;
+}
+#spanheaderhome:hover{
+	text-decoration: underline;
+}
+#spanheaderabout {
+	font-family: impact;
+	margin-left: 50px;
+	font-size: 30px;
+}
+#spanheaderabout:hover{
+	text-decoration: underline;
+}
+#spanheadercreate{
+	font-family: impact;
+	margin-left: 50px;
+	font-size: 30px;
+}
+#spanheadercreate:hover{
+	text-decoration: underline;
 }
 </style>
 
-<script>
-function funcremove(){
-	document.getElementById("divover").style.width="0px";
-	document.getElementById("divover").style.height="0px";
-}
-</script>
 </head>
 <body>
 
-<div id="divover" onClick="funcremove()"></div>
+
 <div id="divnav">
 <div id="divnav1" onClick="functionscroll1()"></div><br>
-<div id="divnav1" onClick="functionscroll2()"></div><br>
-<div id="divnav1" onClick="functionscroll3()"></div>
+<div id="divnav2" onClick="functionscroll2()"></div><br>
+<div id="divnav3" onClick="functionscroll3()"></div>
 </div>
 
 <div id="divslide1">
-	<img src="{% static 'images/toucan.png'%}" id="mascot">
+	<img src="{% static 'images/toucanfinal2.png'%}" id="mascot" style="position: absolute; right: 0%; top: 20%;">
 </div>
 <div id="divslide2">
-<span id="spanabout">About Us</span>
-<span id="spancontent">It's who we are, BITCHES!</span>
+<span id="spanabout">Express yourself.</span>
+<span id="spancontent">We made it really easy to post anything while remaining completely anonymous the entire time. <br/> You can crib about anyone you want without them knowing it's you.</span>
 </div>
 <div id="divslide3">
 	<div id="divform">
@@ -183,4 +201,4 @@ function funcremove(){
 	<input type="submit" value="CREATE THREAD" id="submitbutton">
 </div>
 </div>
-<div id="divheader">	</div>
+<div id="divheader"><span id="spanheaderhome" onclick="functionscroll1()">Home</span><span id="spanheaderabout"  onclick="functionscroll2()">About Us</span><span id="spanheadercreate"  onclick="functionscroll3()">Create Thread</span></div>

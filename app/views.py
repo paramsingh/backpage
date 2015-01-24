@@ -89,7 +89,7 @@ def report_thread(request, thread_id):
 			thread_report = thread_report_form.save(commit=False)
 			thread_report.thread = current_thread
 			thread_report.save()
-			current_thread.reports = ThreadReport.objects.filter(thread = current_thread).count()
+			current_thread.reports=ThreadReport.objects.filter(thread=current_thread).count()
 			current_thread.save()
 			return HttpResponseRedirect("/app/thread/"+str(current_thread.id)+"/")
 		else:
