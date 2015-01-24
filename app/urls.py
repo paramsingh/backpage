@@ -6,4 +6,6 @@ urlpatterns = patterns('',
 	url(r'^thread/(?P<thread_id>\w+)/$', views.thread, name="view thread"),
 	url(r'^numposts/(?P<thread_id>\w+)/$', views.numberofposts, name="numberofposts"),
 	url(r'^test/$', views.test, name="test"),
+	url(r'^report_thread/(?P<thread_id>\w+)/$', views.report_thread, name="report_thread"),
+	url(r'^report_post/(?P<post_id>\w+)/$', views.report_post, name="report_post")
 )

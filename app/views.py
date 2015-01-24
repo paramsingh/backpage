@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from app.forms import ThreadForm, PostForm
-from app.models import Thread, Post
+from app.forms import ThreadForm, PostForm, PostReportForm, ThreadReportForm
+from app.models import Thread, Post, ThreadReport, PostReport
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 def threads_in_order():
@@ -32,7 +32,11 @@ def thread(request, thread_id):
 		current_thread = Thread.objects.get(id=thread_id)
 	except Thread.DoesNotExist:
 		return HttpResponse("404 Thread does not exist")
-	context_dict = {'thread': current_thread}
+	context_dict = {
+		'thread': current_thread,
+		'thread_report_form': ThreadReportForm(),
+		'post_report_form': PostReportForm()
+	}
 	if request.method == 'POST':
 		post_form = PostForm(request.POST)
 		if post_form.is_valid():
@@ -71,3 +75,46 @@ def all_threads(request):
 	context_dict = {}
 	context_dict['threads'] = threads
 	return render(request, 'app/index.html', context_dict)
+
+def report_thread(request, thread_id):
+	thread_id = int(thread_id)
+	context_dict = {'form': ThreadReportForm(), 'current_thread': thread_id}
+	try:
+		current_thread = Thread.objects.get(pk=thread_id)
+	except Thread.DoesNotExist:
+		return HttpResponse("The thread you are trying to report does not exist")
+	if request.method == 'POST':
+		thread_report_form = ThreadReportForm(request.POST)
+		if thread_report_form.is_valid():
+			thread_report = thread_report_form.save(commit=False)
+			thread_report.thread = current_thread
+			thread_report.save()
+			current_thread.reports = ThreadReport.objects.filter(thread = current_thread).count()
+			current_thread.save()
+			return HttpResponseRedirect("/app/thread/"+str(current_thread.id)+"/")
+		else:
+			print(thread_report_form.errors)
+	return render(request, 'app/thread_report.html', context_dict)
+
+def report_post(request, post_id):
+	post_id = int(post_id)
+	context_dict = {'form': PostReportForm(),'post_id': post_id}
+	try:
+		current_post = Post.objects.get(pk=post_id)
+	except Post.DoesNotExist:
+		return HttpResponse("The post you're trying to report does not exist")
+	if request.method == 'POST':
+		post_report_form = PostReportForm(request.POST)
+		if post_report_form.is_valid():
+			post_report = post_report_form.save(commit = False)
+			post_report.post = current_post
+			post_report.save()
+			current_post.reports = PostReport.objects.filter(post = current_post).count()
+			current_post.save()
+			thread_id = current_post.thread.id
+			return HttpResponseRedirect("/app/thread/"+str(thread_id)+"/")
+		else:
+			print(post_report_form.errors)
+	return render(request, 'app/post_report.html', context_dict)
+
+

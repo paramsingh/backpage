@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+	<title>Report thread</title>
+</head>
+
+<body>
+	<form action="/app/report_thread/{{current_thread}}/" method="POST">
+		{% csrf_token %}
+		{{form.message}}
+		<input type="submit" value="Report Thread">
+	</form>
+</body>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+	<title>Report post</title>
+</head>
+
+<body>
+	<form action="/app/report_post/{{post_id}}/" method="POST">
+		{% csrf_token %}
+		{{form.message}}
+		<input type="submit" value="Report Post">
+	</form>
+</body>
