@@ -17,7 +17,7 @@ body {
 	min-width: 980px;
 	overflow: hidden;
 }
-#divslide1, #divslide2, #divslide3{
+#divslide1, #divslide2, #divslide3,#divslide4{
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -34,7 +34,10 @@ body {
 	background-color: #3333CC;
 	top: 100%;
 }
-
+#divslide4 {
+	background-color: red;
+	top: 100%;
+}
 #divnav{
 	float: left;
 	position: fixed;
@@ -42,7 +45,7 @@ body {
 	left: 3%;
 	z-index: 1500;
 }
-#divnav1,#divnav2,#divnav3{
+#divnav1,#divnav2,#divnav3,#divnav4{
 	width: 15px;
 	height: 15px;
 	border-radius: 10px;
@@ -51,7 +54,7 @@ body {
 	margin-top: -20px;
 	position: fixed;
 }
-#divnav1:hover,#divnav2:hover,#divnav3:hover{
+#divnav1:hover,#divnav2:hover,#divnav3:hover,#divnav4:hover{
 	box-shadow: 0px 0px 2px 2px white;
 	background-color: brown;
 }
@@ -173,6 +176,14 @@ body {
 #spanheadercreate:hover{
 	text-decoration: underline;
 }
+#spanheaderthread {
+	font-family: impact;
+	margin-left: 50px;
+	font-size: 30px;
+}
+#spanheaderthread:hover{
+	text-decoration: underline;
+}
 </style>
 
 </head>
@@ -182,7 +193,8 @@ body {
 <div id="divnav">
 <div id="divnav1" onClick="functionscroll1()"></div><br>
 <div id="divnav2" onClick="functionscroll2()"></div><br>
-<div id="divnav3" onClick="functionscroll3()"></div>
+<div id="divnav3" onClick="functionscroll3()"></div><br>
+<div id="divnav4" onClick="functionscroll4()"></div>
 </div>
 
 <div id="divslide1">
@@ -193,12 +205,15 @@ body {
 <span id="spancontent">We made it really easy to post anything while remaining completely anonymous the entire time. <br/> You can crib about anyone you want without them knowing it's you.</span>
 </div>
 <div id="divslide3">
-	<div id="divform">
+<div id="divform">
 	<form action="/app/index/" method="POST">
 	{% csrf_token %}
 	{{form.title}}<br>
 	{{form.text}}
 	<input type="submit" value="CREATE THREAD" id="submitbutton">
+	</div>
 </div>
-</div>
-<div id="divheader"><span id="spanheaderhome" onclick="functionscroll1()">Home</span><span id="spanheaderabout"  onclick="functionscroll2()">About Us</span><span id="spanheadercreate"  onclick="functionscroll3()">Create Thread</span></div>
+<div id="divslide4">
+
+ </div>
+<div id="divheader"><span id="spanheaderhome" onclick="functionscroll1()">Home</span><span id="spanheaderabout"  onclick="functionscroll2()">About Us</span><span id="spanheadercreate"  onclick="functionscroll3()">Create Thread</span><span id="spanheaderthread"  onclick="functionscroll4()">Threads</span></div>

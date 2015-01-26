@@ -158,7 +158,7 @@
 		</div>
 
 		{% for i in posts %}
-			<div class="divPost">
+			<div class="divPost" id="divPost{{i.id}}">
 				<span class="spanreport" onClick="funcreport{{i.id}}()">Report</span>
 				<div id="report{{i.id}}"  style="position: absolute; margin: auto; display: none; top: 350px; width: 300px; height: 100px; background-color: violet; border: 1px solid black; line-height: 100px; text-align: center; box-shadow: 10px 10px 2px 2px silver; border-radius: 5px;">
 				<form action="/app/report_post/{{i.id}}/" method="post">
@@ -172,7 +172,7 @@
 					document.getElementById("report{{i.id}}").style.display="inline";
 				}
 			</script>
-			<span class="postNo">Post #{{i.id}}</span>
+			<span class="postNo"><a href="/app/thread/{{thread.id}}/#divPost{{i.id}}">Post #{{i.id}}</a></span>
 			<span class="postText">{{i.text}}</span>
 			<span class="postTime" id="post{{i.id}}"><script>
 			var a = new Date("{{i.time_posted|date:'Y/m/d H:i:s'}}");
