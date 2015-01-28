@@ -174,6 +174,7 @@
 			</script>
 			<span class="postNo"><a href="/app/thread/{{thread.id}}/#divPost{{i.id}}">Post #{{i.id}}</a></span>
 			<span class="postText">{{i.text}}</span>
+			{{i.poster}}
 			<span class="postTime" id="post{{i.id}}"><script>
 			var a = new Date("{{i.time_posted|date:'Y/m/d H:i:s'}}");
 			var b=new Date();
