@@ -15,11 +15,15 @@ def create(request):
 	if request.method == 'POST':
 		thread_form = ThreadForm(request.POST)
 		if thread_form.is_valid():
-			thread = thread_form.save(commit=True)
+			thread = thread_form.save(commit=False)
+			thread.poster = request.META['REMOTE_ADDR']
 			if Thread.objects.count() > max_number:
 				threads = threads_in_rev_order()
 				a = threads[0]
 				a.delete()
+				posts = Post.objects.filter(thread = a)
+				for p in posts:
+					p.delete()
 			return HttpResponseRedirect("/app/thread/"+str(thread.id)+"/")
 		else:
 			print(thread_form.errors)
@@ -42,8 +46,10 @@ def thread(request, thread_id):
 		if post_form.is_valid():
 			post = post_form.save(commit = False)
 			post.thread = current_thread
+			post.poster = request.META['REMOTE_ADDR']
 			post.save()
 			current_thread.last_post_time = post.time_posted
+			current_thread.post_count += 1
 			current_thread.save()
 			print(str(current_thread.last_post_time))
 		else:

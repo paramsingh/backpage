@@ -1,14 +1,15 @@
 from django.db import models
 
-
 class Thread(models.Model):
-	global_thread_num = 0
 	title = models.CharField(max_length=200)
 	thread_pos = models.IntegerField(default=1)
 	text = models.TextField(default='')
 	time = models.DateTimeField(auto_now_add=True, null=True)
 	last_post_time = models.DateTimeField(auto_now_add=True, null=True)
 	reports = models.IntegerField(default = 0)
+	post_count = models.IntegerField(default = 0)
+	poster = models.GenericIPAddressField(null=True)
+	admin = models.BooleanField(default = False)
 
 	
 	def __str__(self):
@@ -19,6 +20,9 @@ class Post(models.Model):
 	text = models.TextField(default='')
 	reports = models.IntegerField(default = 0)
 	thread = models.ForeignKey('Thread', related_name='posts')
+	poster = models.GenericIPAddressField(null=True)
+	admin = models.BooleanField(default = False)
+
 
 	def __str__(self):
 		return self.text
