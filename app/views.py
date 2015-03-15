@@ -10,7 +10,7 @@ def threads_in_rev_order():
 	return sorted(Thread.objects.all(), key=lambda x: x.last_post_time)
 
 def index(request):
-	''' A view for the index page. We list all the current threads here and 
+	''' A view for the index page. We list all the current threads here and
 		also give the user the ability to create new threads here. '''
 	context_dict = {'form': ThreadForm()}
 	max_number = 20
@@ -26,6 +26,7 @@ def index(request):
 				posts = Post.objects.filter(thread = a)
 				for p in posts:
 					p.delete()
+			thread.save()
 			return HttpResponseRedirect("/app/thread/"+str(thread.id)+"/")
 		else:
 			print(thread_form.errors)
@@ -63,8 +64,8 @@ def thread(request, thread_id):
 	return render(request, 'app/thread.html', context_dict)
 
 def numberofposts(request, thread_id):
-	''' This view returns the posts in the thread in the form of JSON. 
-		It exists because eventually we might use Ajax to make requests to this 
+	''' This view returns the posts in the thread in the form of JSON.
+		It exists because eventually we might use Ajax to make requests to this
 		view for autorefresh of threads. '''
 	thread_id = int(thread_id)
 	try:
@@ -135,6 +136,3 @@ def post_redirect(request, post_id):
 		return HttpResponseRedirect("/app/thread/"+str(id)+"/#divPost"+str(post_id))
 	except Post.DoesNotExist:
 		return HttpResponse("404 The post you're trying to open does not exist")
-
-
-
